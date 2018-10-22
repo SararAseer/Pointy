@@ -1,0 +1,232 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
+
+struct bit{
+   unsigned int v : 1;
+};
+ 
+int Sieve(int n){
+  if(n==1){
+    return 2;
+  }
+  int s=(int)(n*log(n)*1.5);
+  int c=1;
+  char *a = malloc(s);
+  for(int i=3; i <s; i+=2){
+    if(a[i]!='h'){
+      c++;
+      for(int x=i*3; x < s; x+=i*2){
+	a[x]='h';
+      }
+    }
+    if(c==n){
+      return i;
+    }
+  }
+  return 0;
+}
+
+int Sieve2(int n){
+  int s=(int)(n*log(n)*1.5);
+  bool * a=calloc(1,s);
+  for(int i=2; i <s; i++){
+    a[i]=false;
+  }
+  for(int i=2; i <s; i++){
+    if(!a[i]){
+      for(int x=i*2; x <s; x+=i){
+	a[x]=true;
+      }
+    }
+  }
+  int x=0;
+  for(int i=2; i <s; i++){
+    if(!a[i]){
+      x++;
+    }
+    if(x==n){
+      return i;
+    }
+  }
+  return 0;
+}
+
+int Sieve3(int n){
+  int s=(int)(n*log(n)*1.5);
+  int c=1;
+  int b=3;
+  char *a = malloc(s);
+  while(c!=n){
+    b+=2;
+    if(a[b]!='h'){
+      c++;
+      for(int i=b*2; i <s; i+=b){
+	a[i]='h';
+      }
+    }
+  }
+  return b;
+}
+
+int Sieve4(int n){
+  int s=(int)(n*log(n)*1.5);
+  int x[n];
+  x[0]=2;
+  int b=1;
+  for(int i=3; i <s; i++){
+    bool c=true;
+    for(int a=0; a<b; a++){
+      if(i%x[a]==0){
+	c=false;
+      }
+    }
+    if(c){
+      x[b]=i;
+      b++;
+    }
+  }
+ 
+  return x[n-1];
+}
+
+
+int Sieve5(int n){
+  if(n==1){
+    return 2;
+  }
+  int s=(((int)(n*log(n)*1.5))-1)/2;
+  int c=1;
+  int b=1;
+  int *a = malloc(s);
+  a[0]=2;
+  for(int x=3; x< s*2+1; x+=2){
+    a[b]=x;
+    b++;
+  }
+  for(int x=1; x< s; x++){
+    for(int i=x+1; i< s; i++){
+      if(a[i]!=0 && a[x]!=0 && a[i]%a[x]==0){
+	a[x]=0;
+      }
+    }
+  }
+  for(int x=1; x<s; x++){
+    if(a[x]!=0){
+      c++;
+    }
+    if(c==n+1){
+      return a[x];
+    }
+  }
+  
+  
+
+  return 0;
+}
+
+int Sieve7(int n){
+  if(n==1){
+    return 2;
+  }
+  int s=(int)(n*log(n)*1.5);
+  int s1=ceil(sqrt(s));
+  int c=1;
+  int q;
+  char *a = malloc(s);
+  for(int i=3; i <s1; i+=2){
+    q=i*i;
+    if(a[i]!='h'){
+      for(int x=i*i; x < s; x+=i*2){
+	a[x]='h';
+      }
+    }
+  
+  }
+  for(int i=q;  i <s; i+=2){
+    if(a[i]!='h'){
+      return i;
+    }
+  }
+  return 0;
+}
+
+struct bit Sieve8(int n){
+  int s=(int)(n*log(n)*1.3);
+  struct bit *x=malloc(s);
+  
+  return *x;
+}
+
+int Sieve9(int n){
+  if(n==1){
+    return 2;
+  }
+  int s=(int)(n*log(n)*1.5);
+  int s1=ceil(sqrt(s));
+  int c=1;
+  bool *a = calloc(1,s);
+  for(int i=3; i <s; i+=2){
+    a[i]=true;
+  }
+  for(int i=3; i <s1; i+=2){
+    if(a[i]){
+      for(int x=i*i; x < s; x+=i*2){
+	a[x]=false;
+      }
+    }
+  
+  }
+ 
+  for(int i=3;  i <s; i+=2){
+    if(a[i]){
+      c++;
+    }
+    if(c==n){
+      return i;
+    }
+
+  }
+  return 0;
+}
+
+
+
+int Sieve10(int n){
+  if(n==1){
+    return 2;
+  }
+  int s=(int)(n*log(n)*1.5);
+  int s1=ceil(sqrt(s));
+  int c=1;
+  int q;
+  char *a = malloc(s);
+  for(int i=3; i <s1; i+=2){
+    q=i*i;
+    if(a[i]!='h'){
+      for(int x=i*i; x < s; x+=i*2){
+	a[x]='h';
+      }
+    }
+  
+  }
+  for(int i=q;  i <s; i+=2){
+    if(a[i]!='h'){
+      return i;
+    }
+  }
+  return 0;
+}
+
+
+
+int main(){
+  //Sieve7 best Sieve
+  // printf("%d \n",(int)(10*log(10)*1.5));
+   printf("%i \n",Sieve7(1000000));
+  // printf("Size of test2 is %lu bytes\n", sizeof(Sieve8(100))); 
+  
+  return 0;
+
+}
